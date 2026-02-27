@@ -647,6 +647,103 @@
     </div>
 
     <script>
+        // Real data from Excel
+        const realContracts = [
+{id: 'A-048', brand: "Ateeq Tea", signed: '2025-01-11', cv: 8400, down: 700, monthly: 700, lost: null},
+{id: 'A-044', brand: "Solo Bean", signed: '2025-01-05', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-082', brand: "Nabl", signed: '2025-01-13', cv: 8400, down: 700, monthly: 700, lost: null},
+{id: 'A-067', brand: "Kunafa", signed: '2025-02-10', cv: 6675, down: 1500, monthly: 575, lost: null},
+{id: 'A-042', brand: "Salad Land", signed: '2025-02-20', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-080', brand: "MissLawah", signed: '2025-03-18', cv: 9660, down: 805, monthly: 805, lost: null},
+{id: 'A-031', brand: "Dorsha", signed: '2025-04-11', cv: 7025, down: 700, monthly: 575, lost: '2025-12-31'},
+{id: 'A-075', brand: "Lisa", signed: '2025-04-11', cv: 9660, down: 805, monthly: 805, lost: null},
+{id: 'A-079', brand: "Makhbuz Khaliyah And More", signed: '2025-04-17', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-034', brand: "Retim", signed: '2025-04-07', cv: 7800, down: 1500, monthly: 700, lost: null},
+{id: 'A-076', brand: "Marker", signed: '2025-04-20', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-011', brand: "Bistro", signed: '2025-04-27', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-051', brand: "Samoli Sallom", signed: '2025-04-27', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-043', brand: "Solo Cup", signed: '2025-04-27', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-096', brand: "Whisk", signed: '2025-04-28', cv: 7275, down: 2100, monthly: 575, lost: null},
+{id: 'A-058', brand: "Fotoor And Khafayif", signed: '2025-05-20', cv: 5950, down: 2500, monthly: 575, lost: null},
+{id: 'A-089', brand: "Hoyo Burger", signed: '2025-06-28', cv: 8970, down: 1725, monthly: 805, lost: null},
+{id: 'A-020', brand: "Jomo", signed: '2025-06-03', cv: 6210, down: 1035, monthly: 575, lost: null},
+{id: 'A-116', brand: "Appy", signed: '2025-06-03', cv: 6210, down: 1035, monthly: 575, lost: null},
+{id: 'A-117', brand: "Cred", signed: '2025-06-03', cv: 6210, down: 1035, monthly: 575, lost: null},
+{id: 'A-052', brand: "Sarif", signed: '2025-06-25', cv: 7275, down: 2100, monthly: 575, lost: null},
+{id: 'A-097', brand: "Selah", signed: '2025-06-17', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-002', brand: "Arrow - Khazzaz", signed: '2025-07-26', cv: 9950, down: 5750, monthly: 700, lost: null},
+{id: 'A-021', brand: "Huroof", signed: '2025-07-27', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-014', brand: "Tenth Deer - MAIN", signed: '2025-07-07', cv: 6660, down: 1665, monthly: 555, lost: null},
+{id: 'A-090', brand: "Watar Alsham", signed: '2025-07-10', cv: 6900, down: 1150, monthly: 575, lost: null},
+{id: 'A-008', brand: "Bahir", signed: '2025-08-30', cv: 5000, down: 5000, monthly: 0, lost: null},
+{id: 'A-032', brand: "Dev Burger", signed: '2025-08-11', cv: 8625, down: 3450, monthly: 575, lost: null},
+{id: 'A-056', brand: "Furniyah", signed: '2025-08-14', cv: 5750, down: 5750, monthly: 0, lost: null},
+{id: 'A-086', brand: "Hanim", signed: '2025-08-27', cv: 8050, down: 2875, monthly: 575, lost: null},
+{id: 'A-003', brand: "Avani", signed: '2025-08-08', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-094', brand: "Six Rajab- RYD", signed: '2025-08-26', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-004', brand: "White Flower", signed: '2025-08-12', cv: 8625, down: 3450, monthly: 575, lost: null},
+{id: 'A-065', brand: "Kirmomez", signed: '2025-09-24', cv: 6425, down: 2975, monthly: 575, lost: null},
+{id: 'A-077', brand: "Mav", signed: '2025-09-07', cv: 6900, down: 1725, monthly: 575, lost: null},
+{id: 'A-017', brand: "Take Away", signed: '2025-09-20', cv: 4995, down: 4995, monthly: 0, lost: null},
+{id: 'A-006', brand: "Evants", signed: '2025-09-28', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-102', brand: "SoloBean Cloud Kitchen", signed: '2025-09-24', cv: 4995, down: 4995, monthly: 0, lost: null},
+{id: 'A-103', brand: "Ramadi", signed: '2025-09-25', cv: 5499, down: 2750, monthly: 458, lost: null},
+{id: 'A-113', brand: "Tasali Hawari - RYD- Izdihar", signed: '2025-09-24', cv: 4600, down: 4600, monthly: 0, lost: null},
+{id: 'A-049', brand: "Shay Mahbook", signed: '2025-10-08', cv: 8970, down: 1725, monthly: 805, lost: null},
+{id: 'A-013', brand: "Tasali Hawari - MAIN", signed: '2025-10-06', cv: 12300, down: 6150, monthly: 1025, lost: null},
+{id: 'A-041', brand: "Sokoon Albon", signed: '2025-10-23', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-061', brand: "Four Pieces", signed: '2025-10-27', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-064', brand: "Gou", signed: '2025-10-27', cv: 4995, down: 4995, monthly: 0, lost: null},
+{id: 'A-105', brand: "Caro", signed: '2025-10-28', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-106', brand: "Abdulelah Res", signed: '2025-10-28', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-104', brand: "So Burger, Jojo Burger", signed: '2025-10-22', cv: 11500, down: 11500, monthly: 0, lost: null},
+{id: 'A-071', brand: "Lidhih Cub", signed: '2025-11-01', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-107', brand: "One Lamoon", signed: '2025-11-11', cv: 6900, down: 3450, monthly: 575, lost: null},
+{id: 'A-109', brand: "Zenat Alenab", signed: '2025-11-22', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-060', brand: "Fawal Mumtaz", signed: '2025-11-01', cv: 4105, down: 1000, monthly: 345, lost: null},
+{id: 'A-112', brand: "Altaj Sandwitchs", signed: '2025-12-18', cv: 6000, down: 2000, monthly: 500, lost: null},
+{id: 'A-098', brand: "Tenth Deer - KRJ-NUZHA", signed: '2025-12-21', cv: 3000, down: 250, monthly: 250, lost: null},
+{id: 'A-108', brand: "Tasali Hawari - RYD-Sahafa", signed: '2025-12-22', cv: 4995, down: 4995, monthly: 0, lost: null},
+{id: 'A-110', brand: "Latha Mutabal", signed: '2025-12-20', cv: 8625, down: 3450, monthly: 575, lost: null},
+{id: 'A-111', brand: "Shahad & Ahad Bakery", signed: '2025-12-14', cv: 5500, down: 5500, monthly: 0, lost: null},
+{id: 'A-099', brand: "One Zoon Nasifah", signed: '2025-12-23', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-113', brand: "Six Rajab - KBR-Thuqbah", signed: '2025-12-14', cv: 6900, down: 1725, monthly: 575, lost: null},
+{id: 'A-115', brand: "Pure", signed: '2025-12-23', cv: 12000, down: 1000, monthly: 1000, lost: null},
+{id: 'A-120', brand: "Shawarma istanbul Woroud", signed: '2025-12-01', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-121', brand: "Sezl", signed: '2025-12-29', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-070', brand: "Lata Cup", signed: '2024-05-21', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-101', brand: "Khaliya", signed: '2024-06-01', cv: 7800, down: 1500, monthly: 700, lost: '2025-06-01'},
+{id: 'A-087', brand: "Hoof", signed: '2024-06-05', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-095', brand: "Witro", signed: '2024-07-08', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-022', brand: "Hikaya", signed: '2024-07-21', cv: 4140, down: 345, monthly: 345, lost: '2025-02-01'},
+{id: 'A-084', brand: "Habinz", signed: '2024-07-26', cv: 4140, down: 345, monthly: 345, lost: '2025-03-01'},
+{id: 'A-091', brand: "Wahi", signed: '2024-07-26', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-016', brand: "Toucan", signed: '2024-07-30', cv: 4140, down: 345, monthly: 345, lost: '2025-04-01'},
+{id: 'A-036', brand: "Rashaf", signed: '2024-07-07', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-018', brand: "Jara", signed: '2024-08-05', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-010', brand: "Biyalh Shay", signed: '2024-08-15', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-040', brand: "Skaff", signed: '2024-08-15', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-050', brand: "Zaiton Tree", signed: '2024-08-22', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-012', brand: "Triple", signed: '2024-08-07', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-030', brand: "Dopcafe", signed: '2024-09-02', cv: 6210, down: 1035, monthly: 575, lost: null},
+{id: 'A-038', brand: "Zaitona", signed: '2024-09-05', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-007', brand: "Ivy", signed: '2024-09-10', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-025', brand: "Khaliyah Farah", signed: '2024-09-13', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-055', brand: "Valley Tea", signed: '2024-09-15', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-035', brand: "Rahab", signed: '2024-09-29', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-069', brand: "Kil Salad", signed: '2024-09-07', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-073', brand: "Luqmah Diet", signed: '2024-10-11', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-028', brand: "Dukan Asheesh", signed: '2024-10-22', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-072', brand: "Luqmah", signed: '2024-11-29', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-045', brand: "Shawarma Istanbol,Thehn", signed: '2024-11-01', cv: 4105, down: 1000, monthly: 345, lost: null},
+{id: 'A-119', brand: "Shawaya Corner", signed: '2024-11-01', cv: 4105, down: 1000, monthly: 345, lost: null},
+{id: 'A-093', brand: "One Zoon", signed: '2024-12-01', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-057', brand: "Pastry Station", signed: '2024-12-01', cv: 4140, down: 345, monthly: 345, lost: null},
+{id: 'A-009', brand: "Blog", signed: '2024-12-25', cv: 6900, down: 575, monthly: 575, lost: null},
+{id: 'A-039', brand: "Six Rajab - MAIN", signed: '2024-12-25', cv: 9660, down: 805, monthly: 805, lost: null},
+{id: 'A-092', brand: "One Taste", signed: '2024-12-01', cv: 6675, down: 1500, monthly: 575, lost: null}
+];
+
         // ==================== DATA GENERATION ====================
         
         const months = [
@@ -664,55 +761,12 @@
             lostDate: null
         };
 
-        // Generate 94 contracts for 2025
-        function generateContracts() {
-            const contracts = [];
-            const startDate = new Date(2025, 0, 1);
-            
-            // Distribute 94 contracts across 12 months with some randomness
-            const distribution = [8, 6, 10, 7, 9, 8, 7, 10, 8, 7, 8, 6]; // Total = 94
-            
-            let contractId = 1;
-            
-            distribution.forEach((count, monthIndex) => {
-                for (let i = 0; i < count; i++) {
-                    // Random day in month
-                    const day = Math.floor(Math.random() * 28) + 1;
-                    const signedDate = new Date(2025, monthIndex, day);
-                    
-                    // Random CV between 15000 and 120000
-                    const cv = Math.floor(Math.random() * 105000) + 15000;
-                    
-                    // Downpayment: 15-30% of CV
-                    const downpaymentPercent = 0.15 + Math.random() * 0.15;
-                    const downpayment = Math.floor(cv * downpaymentPercent);
-                    
-                    // Monthly payment: (CV - downpayment) / 12 or split differently
-                    const monthly = Math.floor((cv - downpayment) / 12);
-                    
-                    // Some contracts may be lost (later in year)
-                    let lostDate = null;
-                    if (monthIndex >= 6 && Math.random() < 0.15) {
-                        const lostMonth = Math.floor(Math.random() * (11 - monthIndex)) + monthIndex + 1;
-                        const lostDay = Math.floor(Math.random() * 28) + 1;
-                        lostDate = new Date(2025, lostMonth, lostDay);
-                    }
-                    
-                    contracts.push({
-                        id: `CONTRACT-2025-${String(contractId).padStart(3, '0')}`,
-                        signedDate,
-                        cv,
-                        downpayment,
-                        monthly,
-                        lostDate
-                    });
-                    
-                    contractId++;
-                }
-            });
-            
-            return contracts;
-        }
+        // Real contracts from Excel
+        const contracts2025 = realContracts.map(c => ({
+            ...c,
+            signedDate: c.signed ? new Date(c.signed) : null,
+            lostDate: c.lost && c.lost !== 'null' ? new Date(c.lost) : null
+        }));
 
         // Monthly expenses (salaries)
         function generateExpenses() {
