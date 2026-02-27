@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم الأعمال - 2025</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #1a2332;
+            --bg-card-hover: #243044;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #06b6d4;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-danger: #ef4444;
+            --accent-warning: #f59e0b;
+            --border-color: #2d3748;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans Arabic', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.08) 0%, transparent 50%),
+                linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+
+        /* KPI Cards */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--accent-primary);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+            border-color: var(--accent-primary);
+        }
+
+        .kpi-card:hover::before {
+            opacity: 1;
+        }
+
+        .kpi-card.success { --accent-color: var(--accent-success); }
+        .kpi-card.warning { --accent-color: var(--accent-warning); }
+        .kpi-card.danger { --accent-color: var(--accent-danger); }
+        .kpi-card.purple { --accent-color: var(--accent-secondary); }
+
+        .kpi-card .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            background: rgba(6, 182, 212, 0.15);
+        }
+
+        .kpi-card.success .icon { background: rgba(16, 185, 129, 0.15); }
+        .kpi-card.warning .icon { background: rgba(245, 158, 11, 0.15); }
+        .kpi-card.danger .icon { background: rgba(239, 68, 68, 0.15); }
+        .kpi-card.purple .icon { background: rgba(139, 92, 246, 0.15); }
+
+        .kpi-label {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .kpi-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .kpi-change.positive { color: var(--accent-success); }
+        .kpi-change.negative { color: var(--accent-danger); }
+
+        /* Monthly Stats Table */
+        .section {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            white-space: nowrap;
+        }
+
+        th:first-child {
+            border-radius: 8px 0 0 0;
+        }
+
+        th:last-child {
+            border-radius: 0 8px 0 0;
+        }
+
+        tr:hover td {
+            background: var(--bg-card-hover);
+        }
+
+        td {
+            color: var(--text-primary);
+        }
+
+        .number { font-family: 'IBM Plex Sans Arabic', monospace; }
+        .positive { color: var(--accent-success); }
+        .negative { color: var(--accent-danger); }
+        .warning { color: var(--accent-warning); }
+
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Simple Bar Chart */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 250px;
+            padding: 1rem 0;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .bar-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            max-width: 60px;
+        }
+
+        .bar {
+            width: 32px;
+            background: linear-gradient(180deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px 4px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 4px;
+        }
+
+        .bar:hover {
+            filter: brightness(1.2);
+            transform: scaleY(1.02);
+        }
+
+        .bar-label {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        /* Line Chart */
+        .line-chart {
+            height: 250px;
+            position: relative;
+            padding: 1rem;
+        }
+
+        .line-chart svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .summary-item {
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-primary);
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .kpi-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.8rem;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <div class="header animate-in">
+            <h1>📊 لوحة تحكم الأعمال</h1>
+            <p>السنة المالية 2025 - تقرير شامل للأداء</p>
+            
+            <!-- Scenario Toggle -->
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <button class="scenario-btn active" data-scenario="actual" style="padding: 0.75rem 1.5rem; border-radius: 8px; border: 2px solid var(--accent-primary); background: var(--accent-primary); color: white; cursor: pointer; font-weight: 600;">
+                    الأرقام الفعلية
+                </button>
+                <button class="scenario-btn" data-scenario="full" style="padding: 0.75rem 1.5rem; border-radius: 8px; border: 2px solid var(--accent-success); background: transparent; color: var(--accent-success); cursor: pointer; font-weight: 600;">
+                    مع التحصيل الكامل
+                </button>
+                <button class="scenario-btn" data-scenario="60" style="padding: 0.75rem 1.5rem; border-radius: 8px; border: 2px solid var(--accent-warning); background: transparent; color: var(--accent-warning); cursor: pointer; font-weight: 600;">
+                    60% تحصيل
+                </button>
+            </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid">
+            <div class="kpi-card animate-in delay-1">
+                <div class="icon">📝</div>
+                <div class="kpi-label">إجمالي العقود (2025)</div>
+                <div class="kpi-value" id="total-contracts">94</div>
+                <div class="kpi-change positive">+94 عقد جديد</div>
+            </div>
+
+            <div class="kpi-card success animate-in delay-2">
+                <div class="icon">💰</div>
+                <div class="kpi-label">إجمالي MRR (ديسمبر)</div>
+                <div class="kpi-value" id="total-mrr">0</div>
+                <div class="kpi-change positive">ريال/شهر</div>
+            </div>
+
+            <div class="kpi-card purple animate-in delay-3">
+                <div class="icon">📈</div>
+                <div class="kpi-label">ARR (الإيرادات السنوية)</div>
+                <div class="kpi-value" id="total-arr">0</div>
+                <div class="kpi-change positive">ريال/سنة</div>
+            </div>
+
+            <div class="kpi-card warning animate-in delay-4">
+                <div class="icon">👥</div>
+                <div class="kpi-label">العملاء النشطون (أكتوبر)</div>
+                <div class="kpi-value" id="active-customers">0</div>
+                <div class="kpi-change">عميل نشط</div>
+            </div>
+
+            <div class="kpi-card animate-in delay-1">
+                <div class="icon">💵</div>
+                <div class="kpi-label">إجمالي الدفعة الأولى</div>
+                <div class="kpi-value" id="total-downpayment">0</div>
+                <div class="kpi-change positive">ريال</div>
+            </div>
+
+            <div class="kpi-card danger animate-in delay-2">
+                <div class="icon">📉</div>
+                <div class="kpi-label">نسبة فقدان العملاء (Churn)</div>
+                <div class="kpi-value" id="churn-rate">0%</div>
+                <div class="kpi-change negative">أقل هو أفضل</div>
+            </div>
+
+            <div class="kpi-card success animate-in delay-3">
+                <div class="icon">🎯</div>
+                <div class="kpi-label">نسبة المبيعات (Sales Ratio)</div>
+                <div class="kpi-value" id="sales-ratio">0%</div>
+                <div class="kpi-change positive">أعلى أفضل</div>
+            </div>
+
+            <div class="kpi-card animate-in delay-4">
+                <div class="icon">🏢</div>
+                <div class="kpi-label">إجمالي المصروفات</div>
+                <div class="kpi-value" id="total-expenses">0</div>
+                <div class="kpi-change negative">ريال</div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+            <div class="chart-card animate-in delay-2">
+                <div class="chart-title">📈 الإيرادات الشهرية (MRR)</div>
+                <div class="chart-container">
+                    <div class="bar-chart" id="mrr-chart"></div>
+                </div>
+            </div>
+
+            <div class="chart-card animate-in delay-3">
+                <div class="chart-title">👥 عدد العملاء الشهري</div>
+                <div class="chart-container">
+                    <div class="bar-chart" id="customers-chart"></div>
+                </div>
+            </div>
+
+            <div class="chart-card animate-in delay-4">
+                <div class="chart-title">💰 المصروفات الشهرية</div>
+                <div class="chart-container">
+                    <div class="bar-chart" id="expenses-chart"></div>
+                </div>
+            </div>
+
+            <div class="chart-card animate-in delay-4">
+                <div class="chart-title">📊 الدفعة الأولى الشهرية</div>
+                <div class="chart-container">
+                    <div class="bar-chart" id="downpayment-chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Data Table -->
+        <div class="section animate-in delay-4">
+            <div class="section-header">
+                <h2 class="section-title">📅 البيانات الشهرية التفصيلية</h2>
+            </div>
+            <div class="table-container">
+                <table id="monthly-table">
+                    <thead>
+                        <tr>
+                            <th>الشهر</th>
+                            <th>عقود جديدة</th>
+                            <th>عملاء نشطون</th>
+                            <th>عملاء مفقودون</th>
+                            <th>MRR</th>
+                            <th>الدفعة الأولى</th>
+                            <th>المصروفات</th>
+                            <th>المحصل</th>
+                            <th>غير محصل</th>
+                            <th>نسبة Churn</th>
+                        </tr>
+                    </thead>
+                    <tbody id="monthly-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="section animate-in delay-4">
+            <div class="section-header">
+                <h2 class="section-title">📋 ملخص Year 2025</h2>
+            </div>
+            <div class="summary-grid">
+                <div class="summary-item">
+                    <div class="summary-label">إجمالي العقود الموقعة</div>
+                    <div class="summary-value" id="summary-contracts">94</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">إجمالي الإيرادات (MRR السنوي)</div>
+                    <div class="summary-value" id="summary-mrr">0</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">إجمالي المحصل</div>
+                    <div class="summary-value" id="summary-collected">0</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">إجمالي غير المحصل</div>
+                    <div class="summary-value" id="summary-uncollected">0</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">إجمالي المصروفات</div>
+                    <div class="summary-value" id="summary-total-expenses">0</div>
+                </div>
+                <div class="summary-item">
+                    <div class="summary-label">صافي الربح</div>
+                    <div class="summary-value" id="summary-net-profit">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2024 Contract Info -->
+        <div class="section animate-in delay-4">
+            <div class="section-header">
+                <h2 class="section-title">📂 عقد 2024 الموروث</h2>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>رقم العقد</th>
+                        <th>تاريخ التوقيع</th>
+                        <th>القيمة (CV)</th>
+                        <th>الدفعة الأولى</th>
+                        <th>الدفعة الشهرية</th>
+                        <th>الحالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>CONTRACT-2024-001</td>
+                        <td>ديسمبر 2024</td>
+                        <td class="number">60,000</td>
+                        <td class="number">15,000</td>
+                        <td class="number">2,500</td>
+                        <td><span class="positive">نشط</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="footer">
+            <p>🖥️ لوحة التحكم - Year 2025 | تم التحديث: <span id="last-update"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // ==================== DATA GENERATION ====================
+        
+        const months = [
+            'يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو',
+            'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'
+        ];
+
+        // 2024 Contract (inherited to 2025)
+        const contract2024 = {
+            id: 'CONTRACT-2024-001',
+            signedDate: new Date(2024, 11, 15), // December 2024
+            cv: 60000,
+            downpayment: 15000,
+            monthly: 2500,
+            lostDate: null
+        };
+
+        // Generate 94 contracts for 2025
+        function generateContracts() {
+            const contracts = [];
+            const startDate = new Date(2025, 0, 1);
+            
+            // Distribute 94 contracts across 12 months with some randomness
+            const distribution = [8, 6, 10, 7, 9, 8, 7, 10, 8, 7, 8, 6]; // Total = 94
+            
+            let contractId = 1;
+            
+            distribution.forEach((count, monthIndex) => {
+                for (let i = 0; i < count; i++) {
+                    // Random day in month
+                    const day = Math.floor(Math.random() * 28) + 1;
+                    const signedDate = new Date(2025, monthIndex, day);
+                    
+                    // Random CV between 15000 and 120000
+                    const cv = Math.floor(Math.random() * 105000) + 15000;
+                    
+                    // Downpayment: 15-30% of CV
+                    const downpaymentPercent = 0.15 + Math.random() * 0.15;
+                    const downpayment = Math.floor(cv * downpaymentPercent);
+                    
+                    // Monthly payment: (CV - downpayment) / 12 or split differently
+                    const monthly = Math.floor((cv - downpayment) / 12);
+                    
+                    // Some contracts may be lost (later in year)
+                    let lostDate = null;
+                    if (monthIndex >= 6 && Math.random() < 0.15) {
+                        const lostMonth = Math.floor(Math.random() * (11 - monthIndex)) + monthIndex + 1;
+                        const lostDay = Math.floor(Math.random() * 28) + 1;
+                        lostDate = new Date(2025, lostMonth, lostDay);
+                    }
+                    
+                    contracts.push({
+                        id: `CONTRACT-2025-${String(contractId).padStart(3, '0')}`,
+                        signedDate,
+                        cv,
+                        downpayment,
+                        monthly,
+                        lostDate
+                    });
+                    
+                    contractId++;
+                }
+            });
+            
+            return contracts;
+        }
+
+        // Monthly expenses (salaries)
+        function generateExpenses() {
+            // Base salaries + additional costs
+            const baseSalary = 45000; // Base staff salaries
+            const variations = [5000, 3000, 8000, 2000, 6000, 4000, 5000, 7000, 3000, 4000, 8000, 6000];
+            
+            return variations.map(v => baseSalary + v);
+        }
+
+        // Generate data
+        const contracts2025 = generateContracts();
+        const expenses = generateExpenses();
+
+        // ==================== CALCULATIONS ====================
+
+        function calculateMonthlyData() {
+            const monthlyData = [];
+            
+            // Start with 2024 contract
+            let activeFrom2024 = {
+                monthly: contract2024.monthly,
+                active: true
+            };
+
+            for (let month = 0; month < 12; month++) {
+                const monthStart = new Date(2025, month, 1);
+                const monthEnd = new Date(2025, month + 1, 0);
+                
+                // New contracts signed this month
+                const newContracts = contracts2025.filter(c => 
+                    c.signedDate.getMonth() === month && 
+                    c.signedDate.getFullYear() === 2025
+                );
+                
+                // Active contracts: signed before or during this month AND not lost yet
+                let activeContracts = [];
+                
+                // Add 2024 contract if still active (signed before 2025 and not lost)
+                if (!contract2024.lostDate || contract2024.lostDate > monthEnd) {
+                    activeContracts.push(contract2024);
+                }
+                
+                // Add 2025 contracts - signed on or before this month AND (not lost OR lost after this month)
+                contracts2025.forEach(c => {
+                    const signedBeforeOrThisMonth = c.signedDate <= monthEnd;
+                    const notLost = !c.lostDate;
+                    const lostAfterThisMonth = c.lostDate && c.lostDate > monthStart;
+                    if (signedBeforeOrThisMonth && (notLost || lostAfterThisMonth)) {
+                        activeContracts.push(c);
+                    }
+                });
+                
+                // Lost this month
+                const lostContracts = contracts2025.filter(c => 
+                    c.lostDate && 
+                    c.lostDate.getMonth() === month &&
+                    c.lostDate.getFullYear() === 2025
+                );
+                
+                // Calculate MRR
+                const mrr = activeContracts.reduce((sum, c) => sum + c.monthly, 0);
+                
+                // Calculate Downpayments (only 2025 contracts)
+                const downpayment = newContracts.reduce((sum, c) => sum + c.downpayment, 0);
+                
+                // Active customers count
+                const activeCustomers = activeContracts.length;
+                
+                // Lost customers count
+                const lostCustomers = lostContracts.length;
+                
+                // Calculate Churn Rate
+                const churn = activeCustomers > 0 ? (lostCustomers / activeCustomers) * 100 : 0;
+                
+                // Expenses for this month
+                const monthExpenses = expenses[month];
+                
+                // Collection rate based on scenario
+                let collectionRate = 0.9;
+                if (typeof window.collectionScenario !== 'undefined') {
+                    if (window.collectionScenario === 'full') collectionRate = 1.0;
+                    else if (window.collectionScenario === '60') collectionRate = 0.6;
+                }
+                const collected = Math.floor((mrr + downpayment) * collectionRate);
+                const uncollected = (mrr + downpayment) - collected;
+                
+                monthlyData.push({
+                    month: months[month],
+                    monthIndex: month,
+                    newContracts: newContracts.length,
+                    activeCustomers,
+                    lostCustomers,
+                    mrr,
+                    downpayment,
+                    expenses: monthExpenses,
+                    collected,
+                    uncollected,
+                    churn: churn.toFixed(1)
+                });
+            }
+            
+            return monthlyData;
+        }
+
+        // Collection scenario toggle
+        window.collectionScenario = 'actual';
+        
+        function setCollectionScenario(scenario) {
+            window.collectionScenario = scenario;
+            // Update button states
+            document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelector('[data-scenario=\"' + scenario + '\"]').classList.add('active');
+            // Recalculate and re-render
+            const newData = calculateMonthlyData();
+            renderAll(newData);
+        }
+
+        const monthlyData = calculateMonthlyData();
+        
+        function renderAll(data) {
+            // Update KPIs
+            const decMRR = data[11].mrr;
+            document.getElementById('total-mrr').textContent = formatCurrency(decMRR) + ' ريال';
+            document.getElementById('total-arr').textContent = formatCurrency(decMRR * 12) + ' ريال';
+            document.getElementById('active-customers').textContent = data[9].activeCustomers;
+            
+            const totalDown = data.reduce((s, m) => s + m.downpayment, 0);
+            const totalColl = data.reduce((s, m) => s + m.collected, 0);
+            const totalUncoll = data.reduce((s, m) => s + m.uncollected, 0);
+            const totalExp = data.reduce((s, m) => s + m.expenses, 0);
+            
+            document.getElementById('total-downpayment').textContent = formatCurrency(totalDown) + ' ريال';
+            document.getElementById('summary-collected').textContent = formatCurrency(totalColl);
+            document.getElementById('summary-uncollected').textContent = formatCurrency(totalUncoll);
+            document.getElementById('summary-net-profit').textContent = formatCurrency(totalColl - totalExp);
+            
+            // Update table
+            const tbody = document.getElementById('monthly-tbody');
+            tbody.innerHTML = data.map(m => `
+                <tr>
+                    <td>${m.month}</td>
+                    <td class="number">${m.newContracts}</td>
+                    <td class="number">${m.activeCustomers}</td>
+                    <td class="number">${m.lostCustomers}</td>
+                    <td class="number positive">${formatCurrency(m.mrr)}</td>
+                    <td class="number">${formatCurrency(m.downpayment)}</td>
+                    <td class="number">${formatCurrency(m.collected)}</td>
+                    <td class="number">${formatCurrency(m.uncollected)}</td>
+                    <td class="number negative">${formatCurrency(m.expenses)}</td>
+                    <td class="number ${m.collected - m.expenses >= 0 ? 'positive' : 'negative'}">${formatCurrency(m.collected - m.expenses)}</td>
+                </tr>
+            `).join('');
+        }
+
+        // ==================== KPI CALCULATIONS ====================
+
+        const totalContracts = contracts2025.length;
+        const decemberMRR = monthlyData[11].mrr;
+        const arr = decemberMRR * 12;
+        const totalDownpayment = monthlyData.reduce((sum, m) => sum + m.downpayment, 0);
+        const totalExpenses = monthlyData.reduce((sum, m) => sum + m.expenses, 0);
+        const totalCollected = monthlyData.reduce((sum, m) => sum + m.collected, 0);
+        const totalUncollected = monthlyData.reduce((sum, m) => sum + m.uncollected, 0);
+        
+        // Sales cost (assume 20% of downpayment as sales cost)
+        const totalSalesCost = totalDownpayment * 0.2;
+        const salesRatio = (totalDownpayment / totalSalesCost) * 100;
+        
+        // Average churn rate
+        const avgChurn = monthlyData.reduce((sum, m) => sum + parseFloat(m.churn), 0) / 12;
+        
+        // Peak customers
+        const peakCustomers = Math.max(...monthlyData.map(m => m.activeCustomers));
+        const totalLost = monthlyData.reduce((sum, m) => sum + m.lostCustomers, 0);
+        const churnRate = (totalLost / peakCustomers) * 100;
+
+        // ==================== RENDER FUNCTIONS ====================
+
+        function formatCurrency(value) {
+            return value.toLocaleString('ar-SA');
+        }
+
+        function renderKPIs() {
+            document.getElementById('total-contracts').textContent = totalContracts;
+            document.getElementById('total-mrr').textContent = formatCurrency(decemberMRR) + ' ₹';
+            document.getElementById('total-arr').textContent = formatCurrency(arr) + ' ₹';
+            document.getElementById('active-customers').textContent = monthlyData[9].activeCustomers; // October
+            document.getElementById('total-downpayment').textContent = formatCurrency(totalDownpayment) + ' ₹';
+            document.getElementById('churn-rate').textContent = churnRate.toFixed(1) + '%';
+            document.getElementById('sales-ratio').textContent = salesRatio.toFixed(0) + '%';
+            document.getElementById('total-expenses').textContent = formatCurrency(totalExpenses) + ' ₹';
+            
+            // Summary
+            document.getElementById('summary-contracts').textContent = totalContracts;
+            document.getElementById('summary-mrr').textContent = formatCurrency(monthlyData.reduce((s, m) => s + m.mrr, 0));
+            document.getElementById('summary-collected').textContent = formatCurrency(totalCollected);
+            document.getElementById('summary-uncollected').textContent = formatCurrency(totalUncollected);
+            document.getElementById('summary-total-expenses').textContent = formatCurrency(totalExpenses);
+            document.getElementById('summary-net-profit').textContent = formatCurrency(totalCollected - totalExpenses);
+            
+            // Last update
+            document.getElementById('last-update').textContent = new Date().toLocaleDateString('ar-SA', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('monthly-tbody');
+            tbody.innerHTML = '';
+            
+            monthlyData.forEach(data => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${data.month}</strong></td>
+                    <td class="number">${data.newContracts}</td>
+                    <td class="number positive">${data.activeCustomers}</td>
+                    <td class="number ${data.lostCustomers > 0 ? 'negative' : ''}">${data.lostCustomers}</td>
+                    <td class="number">${formatCurrency(data.mrr)}</td>
+                    <td class="number">${formatCurrency(data.downpayment)}</td>
+                    <td class="number negative">${formatCurrency(data.expenses)}</td>
+                    <td class="number positive">${formatCurrency(data.collected)}</td>
+                    <td class="number warning">${formatCurrency(data.uncollected)}</td>
+                    <td class="number ${data.churn > 5 ? 'negative' : 'positive'}">${data.churn}%</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function renderChart(containerId, data, color = 'primary') {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            
+            const maxValue = Math.max(...data);
+            const colors = {
+                primary: 'linear-gradient(180deg, #06b6d4, #0891b2)',
+                success: 'linear-gradient(180deg, #10b981, #059669)',
+                warning: 'linear-gradient(180deg, #f59e0b, #d97706)',
+                purple: 'linear-gradient(180deg, #8b5cf6, #7c3aed)'
+            };
+            
+            data.forEach((value, index) => {
+                const barGroup = document.createElement('div');
+                barGroup.className = 'bar-group';
+                
+                const height = (value / maxValue) * 200;
+                
+                barGroup.innerHTML = `
+                    <div class="bar" style="height: ${height}px; background: ${colors[color] || colors.primary}">
+                        <span class="bar-value">${value >= 1000 ? (value/1000).toFixed(0) + 'ك' : value}</span>
+                    </div>
+                    <span class="bar-label">${months[index].slice(0, 3)}</span>
+                `;
+                
+                container.appendChild(barGroup);
+            });
+        }
+
+        function renderCharts() {
+            // MRR Chart
+            const mrrData = monthlyData.map(m => m.mrr);
+            renderChart('mrr-chart', mrrData, 'primary');
+            
+            // Customers Chart
+            const customersData = monthlyData.map(m => m.activeCustomers);
+            renderChart('customers-chart', customersData, 'success');
+            
+            // Expenses Chart
+            const expensesData = monthlyData.map(m => m.expenses);
+            renderChart('expenses-chart', expensesData, 'warning');
+            
+            // Downpayment Chart
+            const downpaymentData = monthlyData.map(m => m.downpayment);
+            renderChart('downpayment-chart', downpaymentData, 'purple');
+        }
+
+        // ==================== HIRE CALCULATOR ====================
+        
+        function calculateHire() {
+            const salary = parseFloat(document.getElementById('hire-salary').value) || 4000;
+            const commissionPct = parseFloat(document.getElementById('hire-commission').value) || 5;
+            const avgContractValue = parseFloat(document.getElementById('hire-avc').value) || 7000;
+            const rampMonths = parseInt(document.getElementById('hire-ramp').value) || 3;
+            
+            const commissionPerContract = avgContractValue * (commissionPct / 100);
+            const contractsNeeded = Math.ceil(salary / commissionPerContract);
+            
+            // After ramp, employee can close 1 contract per month average
+            const breakEvenMonth = rampMonths + contractsNeeded;
+            
+            const resultDiv = document.getElementById('hire-result');
+            resultDiv.innerHTML = `
+                <div style="margin-top: 1rem; padding: 1rem; background: var(--bg-secondary); border-radius: 8px;">
+        <!-- Hire Calculator Section -->
+        <div class="section animate-in" style="margin-top: 2rem;">
+            <div class="section-header">
+                <h2 class="section-title">🧮 حاسبة توظيف salesperson</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">الراتب الشهري (ريال)</label>
+                    <input type="number" id="hire-salary" value="4000" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">نسبة العمولة (%)</label>
+                    <input type="number" id="hire-commission" value="5" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">متوسط قيمة العقد (ريال)</label>
+                    <input type="number" id="hire-avc" value="7000" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">شهور التأقلم</label>
+                    <input type="number" id="hire-ramp" value="3" style="width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid var(--border-color); background: var(--bg-card); color: var(--text-primary);">
+                </div>
+            </div>
+            <button id="calculate-hire" style="padding: 0.75rem 2rem; border-radius: 8px; border: none; background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); color: white; cursor: pointer; font-weight: 600;">
+                احسب
+            </button>
+            <div id="hire-result"></div>
+        </div>
+
+                    <p><strong>الدخل من كل عقد:</strong> ${formatCurrency(commissionPerContract)}</p>
+                    <p><strong>العقود المطلوبة للتعادل:</strong> ${contractsNeeded} عقد</p>
+                    <p><strong>شهر التعادل:</strong> شهر ${breakEvenMonth} (${breakEvenMonth <= 12 ? 'خلال 2025' : 'بعد 2025'})</p>
+                    <p style="margin-top: 0.5rem; color: ${breakEvenMonth <= 6 ? 'var(--accent-success)' : 'var(--accent-warning)'};">
+                        ${breakEvenMonth <= 6 ? 'ممتاز - التعادل سريع!' : breakEvenMonth <= 12 ? 'جيد - التعادل خلال سنة' : 'يحتاج مراجعة'}
+                    </p>
+                </div>
+            `;
+        }
+
+        // ==================== SCENARIO TOGGLES ====================
+        
+        function setupScenarioButtons() {
+            const buttons = document.querySelectorAll('.scenario-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const scenario = btn.getAttribute('data-scenario');
+                    setCollectionScenario(scenario);
+                });
+            });
+        }
+
+        // ==================== INITIALIZE ====================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderKPIs();
+            renderTable();
+            renderCharts();
+            setupScenarioButtons();
+            
+            // Setup hire calculator
+            const hireBtn = document.getElementById('calculate-hire');
+            if (hireBtn) {
+                hireBtn.addEventListener('click', calculateHire);
+            }
+        });
+    </script>
+</body>
+</html>
