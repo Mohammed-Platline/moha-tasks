@@ -898,8 +898,8 @@
 
         function renderKPIs() {
             document.getElementById('total-contracts').textContent = totalContracts;
-            document.getElementById('total-mrr').textContent = formatCurrency(decemberMRR) + ' ₹';
-            document.getElementById('total-arr').textContent = formatCurrency(arr) + ' ₹';
+            document.getElementById('total-mrr').textContent = formatCurrency(decemberMRR) + ' ريال';
+            document.getElementById('total-arr').textContent = formatCurrency(arr) + ' ريال';
             document.getElementById('active-customers').textContent = monthlyData[9].activeCustomers; // October
             document.getElementById('total-downpayment').textContent = formatCurrency(totalDownpayment) + ' ₹';
             document.getElementById('churn-rate').textContent = churnRate.toFixed(1) + '%';
@@ -1078,3 +1078,4 @@
     </script>
 </body>
 </html>
+
