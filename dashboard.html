@@ -933,7 +933,7 @@
         
         // Sales cost (assume 20% of downpayment as sales cost)
         const totalSalesCost = totalDownpayment * 0.2;
-        const salesRatio = (totalDownpayment / totalSalesCost) * 100;
+        const salesRatio = totalSalesCost > 0 ? (totalDownpayment / totalSalesCost) * 100 : 0;
         
         // Average churn rate
         const avgChurn = monthlyData.reduce((sum, m) => sum + parseFloat(m.churn), 0) / 12;
@@ -1131,5 +1131,6 @@
     </script>
 </body>
 </html>
+
 
 
